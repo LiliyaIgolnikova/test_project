@@ -3,7 +3,6 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Controller\DataBaseController;
-use Doctrine\Persistence\ManagerRegistry;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,12 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     #[Route('/site.com/category', name: 'app_category')]
-    public function index(ManagerRegistry $doctrine, CategoryRepository $categoryRepository, ProductRepository $productRepository): Response
+    public function index(CategoryRepository $categoryRepository, ProductRepository $productRepository): Response
     {
-        $repository = $doctrine->getRepository(Category::class);
-        $category = $repository->findAll();
-        $repository = $doctrine->getRepository(Product::class);
-        $product = $repository->findAll();
+        $category = $categoryRepository->findAll();
+        $product = $productRepository->findAll();
         $i = 0;
         for ($id = 0; $id < count($category); $id++)
         {
